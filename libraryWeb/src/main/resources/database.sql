@@ -21,9 +21,7 @@ CREATE TABLE LibraryBookGroup
 CREATE TABLE LibraryPosition
 (
    	SysNo INT NOT NULL AUTO_INCREMENT,
-    Value VARCHAR(100) NOT NULL,
-    Position INT NULL,
-    Status INT NOT NULL,
+    VALUE INT NULL,
     PRIMARY KEY(SysNo)
 );
 
@@ -42,5 +40,6 @@ CREATE TABLE LibraryBorrowLog
     UserSysNo INT NOT NULL,
     BorrowDate Date NOT NULL,
     ReturnDate DATE NOT NULL,
+    Status INT NOT NULL,
     PRIMARY KEY(SysNo)
 )

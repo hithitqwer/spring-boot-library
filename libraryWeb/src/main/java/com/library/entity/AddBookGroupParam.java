@@ -4,6 +4,8 @@ import java.util.List;
 
 public class AddBookGroupParam {
 
+    private int sysNo;
+
     private String name;
 
     private String author;
@@ -42,5 +44,13 @@ public class AddBookGroupParam {
 
     public void setBookIdList(List<String> bookIdList) {
         this.bookIdList = bookIdList;
+    }
+
+    public int getSysNo() {
+        return sysNo;
+    }
+
+    public void setSysNo(int sysNo) {
+        this.sysNo = sysNo;
     }
 }
