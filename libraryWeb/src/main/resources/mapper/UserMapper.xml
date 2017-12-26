@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.library.mapper.UserMapper">
+<select id="getLoginUser" resultType="com.library.entity.LoginUser" parameterType="com.library.entity.LoginParam">
+    SELECT * FROM libraryuser WHERE UserId =#{info.userId}  AND Pwd = #{info.password} LIMIT 1
+</select>
+<insert id="addUser" keyColumn="SysNo" keyProperty="sysNo" parameterType="com.library.entity.AddUserParam">
+    INSERT libraryuser
+    (UserId,InDate,Role,Pwd)
+    VALUES
+    (#{info.userId},NOW(),#{info.inDate},#{info.role},#{info.password})
+</insert>
+</mapper>

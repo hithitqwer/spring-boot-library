@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.library.mapper.LibraryMapper">
+    <insert id="addBookGroup" parameterType="com.library.entity.LoginParam">
+        INSERT INTO librarybookgroup
+        (`Name`,`Author`,`InDate`,`Position`)
+        VALUES
+        (#{info.name},#{info.author},NOW(),#{info.position})
+    </insert>
+    <resultMap id="positionInfo" type="com.library.entity.Position">
+        <result property="picUrl" column="picUrl"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <select id="getPositionList" resultMap="positionInfo">
+        SELECT * FROM libraryposition
+    </select>
+</mapper>
