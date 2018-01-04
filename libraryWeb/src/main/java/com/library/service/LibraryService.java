@@ -10,8 +10,13 @@ public interface LibraryService {
 
     int addBookGroup(AddBookGroupParam param);
 
-    PageInfoResult<BookGroupResult> queryBookGroup(QueryBookParam param);
+    PageInfoResult<BookGroupInfo> queryBookGroup(QueryBookParam param);
 
     Integer addPosition(Position position);
 
+    PageInfoResult<BookSKUInfo> queryBookSku(QueryBookParam param);
+
+    void updateBookSkuStatus(int sysNo,int status);
+
+    void deletePosition(int sysNo);
 }

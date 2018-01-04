@@ -1,5 +1,7 @@
 package com.library.entity;
 
+import io.swagger.annotations.ApiParam;
+
 /**
  * @create user 张聪
  * @create date

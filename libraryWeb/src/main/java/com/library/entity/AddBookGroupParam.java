@@ -1,9 +1,14 @@
 package com.library.entity;
 
+import io.swagger.annotations.ApiModelProperty;
+import springfox.documentation.annotations.ApiIgnore;
+import sun.awt.SunHints;
+
 import java.util.List;
 
 public class AddBookGroupParam {
 
+    @ApiModelProperty(hidden = true)
     private int sysNo;
 
     private String name;
@@ -11,6 +16,9 @@ public class AddBookGroupParam {
     private String author;
 
     private int position;
+
+    @ApiModelProperty(hidden = true)
+    private int inUser;
 
     private List<String> bookIdList;
 
@@ -52,5 +60,13 @@ public class AddBookGroupParam {
 
     public void setSysNo(int sysNo) {
         this.sysNo = sysNo;
+    }
+
+    public int getInUser() {
+        return inUser;
+    }
+
+    public void setInUser(int inUser) {
+        this.inUser = inUser;
     }
 }

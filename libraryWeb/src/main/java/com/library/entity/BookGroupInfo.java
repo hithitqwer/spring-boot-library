@@ -5,7 +5,7 @@ import org.bouncycastle.asn1.cms.PasswordRecipientInfo;
 import java.util.Date;
 import java.util.List;
 
-public class BookGroupResult {
+public class BookGroupInfo {
 
     private int sysNo;
 
@@ -19,7 +19,9 @@ public class BookGroupResult {
 
     private Date inDate;
 
-    private List<BookSKUResult> skus;
+    private int remainQty;
+
+    private List<BookSKUInfo> skus;
 
     public int getSysNo() {
         return sysNo;
@@ -69,11 +71,19 @@ public class BookGroupResult {
         this.inDate = inDate;
     }
 
-    public List<BookSKUResult> getSkus() {
+    public List<BookSKUInfo> getSkus() {
         return skus;
     }
 
-    public void setSkus(List<BookSKUResult> skus) {
+    public void setSkus(List<BookSKUInfo> skus) {
         this.skus = skus;
+    }
+
+    public int getRemainQty() {
+        return remainQty;
+    }
+
+    public void setRemainQty(int remainQty) {
+        this.remainQty = remainQty;
     }
 }

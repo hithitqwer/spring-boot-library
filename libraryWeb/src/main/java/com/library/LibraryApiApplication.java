@@ -12,8 +12,8 @@ import java.util.Properties;
 @Configuration
 @SpringBootApplication
 @MapperScan(basePackages = "com.library.mapper")
-public class WebApplication {
+public class LibraryApiApplication {
     public static void main(String[] args) {
-        SpringApplication.run(WebApplication.class, args);
+        SpringApplication.run(LibraryApiApplication.class, args);
     }
 }

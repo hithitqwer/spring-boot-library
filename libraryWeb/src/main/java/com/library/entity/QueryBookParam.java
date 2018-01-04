@@ -2,7 +2,7 @@ package com.library.entity;
 
 public class QueryBookParam extends QueryPageInfoFilter {
 
-    private int bookId;
+    private String bookId;
 
     private String name;
 
@@ -10,11 +10,11 @@ public class QueryBookParam extends QueryPageInfoFilter {
 
     private String author;
 
-    public int getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 

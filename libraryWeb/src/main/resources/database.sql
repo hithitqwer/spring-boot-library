@@ -30,6 +30,7 @@ CREATE TABLE LibraryBookSKU
     SysNo INT NOT NULL AUTO_INCREMENT,
     GroupSysNo INT NOT NULL,
     BookId VARCHAR(200) NOT NULL,
+    Status INT NOT NULL,
     Primary KEY(SysNo)
 );
 

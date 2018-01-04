@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api(value = "UserController", description = "用户管理接口")
 @EnableAutoConfiguration
-@RequestMapping(value = "/api/library")
+@RequestMapping(value = "/api/user")
 public class UserController{
 
     @Autowired
@@ -33,8 +33,8 @@ public class UserController{
         return "Welcome," + username;
     };
 
-    @ApiOperation(value = "登陆接口",notes = "create by 张聪", httpMethod = "POST")
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @ApiOperation(value = "登陆接口",notes = "create by 张聪", httpMethod = "GET")
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
     public ApiResult<LoginResult> login(LoginParam param) throws Exception{
         return new ApiResult<LoginResult>(userService.getLoginUser(param));
     }

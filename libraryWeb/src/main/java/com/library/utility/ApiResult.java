@@ -19,7 +19,7 @@ public class ApiResult<T> {
         this.data = data;
     }
 
-    public ApiResult(String message, T data, boolean success) {
+    public ApiResult(boolean success,T data,String message) {
         this.message = message;
         this.data = data;
         this.success = success;

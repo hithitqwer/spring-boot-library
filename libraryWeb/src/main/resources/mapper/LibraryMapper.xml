@@ -1,17 +1,122 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.library.mapper.LibraryMapper">
-    <insert id="addBookGroup" parameterType="com.library.entity.LoginParam">
+    <select id="checkIsHaveBook" resultType="int">
+        SELECT COUNT(1) FROM librarybooksku WHERE BookId = #{id}
+    </select>
+    <insert id="addBookGroup" parameterType="com.library.entity.AddBookGroupParam" useGeneratedKeys="true" keyProperty="info.sysNo">
         INSERT INTO librarybookgroup
         (`Name`,`Author`,`InDate`,`Position`)
         VALUES
         (#{info.name},#{info.author},NOW(),#{info.position})
     </insert>
+    <insert id="addBookSKUS">
+        INSERT INTO librarybooksku
+        (GroupSysNo,BookId,Status,InDate)
+        VALUES
+        <foreach collection="bookIds" index="index" item="item" separator=",">
+            (#{groupSysNo},#{item},1,NOW())
+        </foreach>
+    </insert>
     <resultMap id="positionInfo" type="com.library.entity.Position">
-        <result property="picUrl" column="picUrl"/>
-        <result property="name" column="name"/>
     </resultMap>
     <select id="getPositionList" resultMap="positionInfo">
         SELECT * FROM libraryposition
     </select>
+    <select id="checkIsHavePosition" resultType="int">
+        SELECT COUNT(*) FROM libraryposition WHERE `Value` = #{value}
+    </select>
+    <insert id="addPosition" useGeneratedKeys="true" keyProperty="info.sysNo" parameterType="com.library.entity.Position" >
+        INSERT INTO libraryposition
+        (`Value`)
+        VALUE
+        (#{info.value})
+    </insert>
+    <resultMap id="bookGroupInfo" type="com.library.entity.BookGroupInfo">
+    </resultMap>
+    <select id="queryBookGroups" resultMap="bookGroupInfo">
+        SELECT
+        sysNo,
+        name,
+        inDate,
+        position
+        FROM librarybookgroup
+        <where>
+            <if test="info.bookId!=null and info.bookId!=''">
+                EXISTS(SELECT 1 FROM librarybooksku WHERE bookid = #{info.bookId})
+            </if>
+            <if test="info.name!=null and info.name!=''">
+                name like %#{info.name}%
+            </if>
+            <if test="info.author!=null and info.author!=''">
+                author = #{info.name}
+            </if>
+            <if test="info.position>0">
+                position = info.position
+            </if>
+        </where>
+    </select>
+    <resultMap id="bookSkuInfo" type="com.library.entity.BookSKUInfo">
+    </resultMap>
+    <select id="queryBookSKU" resultMap="bookSkuInfo">
+        SELECT
+        G.SysNo AS GroupsysNo,
+        SKU.InDate AS InDate,
+        Author,
+        SKU.SysNo AS SysNo,
+        BookId,
+        G.Name,
+        SKU.Status AS Status,
+        IFNULL(borrow.`Status`,0) AS IsBorrowed,
+        U.UserId as borrowUserName
+        FROM librarybookgroup G INNER JOIN librarybooksku SKU
+        ON G.SysNo = SKU.GroupSysNo
+        LEFT JOIN libraryborrowlog borrow
+        ON SKU.SysNo = borrow.BookSysNo
+        LEFT JOIN libraryuser U
+        ON U.SysNo = borrow.UserSysNo
+        <where>
+            <if test="info.bookId!=null and info.bookId!=''">
+                EXISTS(SELECT 1 FROM librarybooksku WHERE bookid = #{info.bookId})
+            </if>
+            <if test="info.name!=null and info.name!=''">
+                name like %#{info.name}%
+            </if>
+            <if test="info.author!=null and info.author!=''">
+                author = #{info.name}
+            </if>
+            <if test="info.position>0">
+                position = info.position
+            </if>
+        </where>
+        LIMIT #{info.pageLimitStart},#{info.pageSize}
+    </select>
+    <select id="queryBookSKUTotalCount" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM librarybookgroup G INNER JOIN librarybooksku SKU
+        ON G.SysNo = SKU.GroupSysNo
+        LEFT JOIN libraryborrowlog borrow
+        ON SKU.SysNo = borrow.BookSysNo
+        <where>
+            <if test="info.bookId!=null and info.bookId!=''">
+                SKU.BookId = #{info.bookId}
+            </if>
+            <if test="info.name!=null and info.name!=''">
+                G.name like %#{info.name}%
+            </if>
+            <if test="info.author!=null and info.author!=''">
+                G.author = #{info.name}
+            </if>
+            <if test="info.position>0">
+                G.position = info.position
+            </if>
+        </where>
+    </select>
+    <update id="updateBookSkuStatus">
+        UPDATE librarybooksku SET `Status` = #{status} WHERE SysNo = #{sysNo} LIMIT 1
+    </update>
+    <update id="deletePosition">
+        DELETE FROM libraryposition WHERE SysNo = #{sysNo} LIMIT 1
+    </update>
 </mapper>
